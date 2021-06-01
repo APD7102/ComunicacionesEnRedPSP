@@ -81,8 +81,8 @@ public class Hilos extends Thread
 						}
 						else if(numeroApuesta == Servidor.numero) 
 						{
-							Servidor.textarea.append(apuestas[0]+" piensa que el número es el "+numeroApuesta+"."+" Y HA ACERTADOOOO!!!!"+ "\n");			
-							Servidor.textarea.append("Fin de Pratida."+ "\n"+ "\n");							
+							Servidor.textarea.append(apuestas[0]+" piensa que el número es el "+numeroApuesta+"."+" y está en lo  cierto"+ "\n");			
+							Servidor.textarea.append("Fin de Partida."+ "\n"+ "\n");							
 							
 							Servidor.textarea.append("Nueva Partida."+ "\n");
 							Servidor.random();
