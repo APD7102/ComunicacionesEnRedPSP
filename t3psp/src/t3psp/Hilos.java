@@ -8,7 +8,7 @@ import java.net.Socket;
 
 public class Hilos extends Thread
 {
-	DataInputStream fentrada;
+	DataInputStream input;
 	Socket socket;
 	boolean fin = false;
 	public Hilos(Socket socket)
@@ -16,7 +16,7 @@ public class Hilos extends Thread
 		this.socket = socket;
 		try
 		{
-			fentrada = new DataInputStream(socket.getInputStream());
+			input = new DataInputStream(socket.getInputStream());
 		}
 
 		catch (IOException e)
@@ -25,28 +25,32 @@ public class Hilos extends Thread
 			e.printStackTrace();
 		}
 	}
+	
 	// En el método run() lo primero que hacemos
-	// es enviar todos los mensajes actuales al cliente que se
+	// es enviar todos los msgs actuales al cliente que se
 	// acaba de incorporar
+	
 	public void run()
 	{
-		Servidor.mensaje.setText("Número de conexiones actuales: " + Servidor.ACTUALES);
+		Servidor.msg.setText("Número de conexiones actuales: " + Servidor.ACTUALES);
 		String texto = Servidor.textarea.getText();
-		EnviarMensajes(texto);
+		Enviarmsgs(texto);
+		
 		// Seguidamente, se crea un bucle en el que se recibe lo que el cliente escribe en el chat.
 		// Cuando un cliente finaliza con el botón Salir, se envía un * al servidor del Chat,
 		// entonces se sale del bucle while, ya que termina el proceso del cliente,
 		// de esta manera se controlan las conexiones actuales
+		
 		while(!fin)
 		{
 			String cadena = "";
 			try
 			{
-				cadena = fentrada.readUTF();
+				cadena = input.readUTF();
 				if(cadena.trim().equals("*"))
 				{
 					Servidor.ACTUALES--;
-					Servidor.mensaje.setText("Conexiones actuales: "
+					Servidor.msg.setText("Conexiones actuales: "
 							+ Servidor.ACTUALES);
 					fin=true;
 				}
@@ -86,13 +90,13 @@ public class Hilos extends Thread
 							
 							Servidor.textarea.append("Nueva Partida."+ "\n");
 							Servidor.random();
-							Servidor.mensaje3.setText(Servidor.numero+"");
+							Servidor.msg3.setText(Servidor.numero+"");
 						}
 						
 					}
 					
 						texto = Servidor.textarea.getText();
-						EnviarMensajes(texto);
+						Enviarmsgs(texto);
 					
 					
 					
@@ -107,11 +111,14 @@ public class Hilos extends Thread
 			}
 		}
 	}
-	// El método EnviarMensajes() envía el texto del textarea a
-	// todos los sockets que están en la tabla de sockets,
-	// de esta forma todos ven la conversación.
-	// El programa abre un stream de salida para escribir el texto en el socket
-	private void EnviarMensajes(String texto)
+	/* 
+	   El método Enviarmsgs() envía el texto del textarea a
+	   todos los sockets que están en la tabla de sockets,
+	   de esta forma todos ven la conversación.
+	   El programa abre un stream de salida para escribir el texto en el socket
+	   
+	*/ 
+	private void Enviarmsgs(String texto)
 	{
 		for(int i=0; i<Servidor.CONEXIONES; i++)
 		{

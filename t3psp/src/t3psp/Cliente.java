@@ -25,7 +25,7 @@ public class Cliente extends JFrame implements ActionListener
 	private JScrollPane scrollpane;
 	static JTextArea textarea;
 	JButton boton = new JButton("Enviar");
-	JButton desconectar = new JButton("Salir");
+	JButton salir = new JButton("Salir");
 	boolean repetir = true;
 	static boolean repetir2 = true;
 	public Cliente(Socket socket, String nombre)
@@ -42,12 +42,12 @@ public class Cliente extends JFrame implements ActionListener
 		add(scrollpane);
 		boton.setBounds(420, 10, 100, 30);
 		add(boton);
-		desconectar.setBounds(420, 50, 100, 30);
-		add(desconectar);
+		salir.setBounds(420, 50, 100, 30);
+		add(salir);
 		textarea.setEditable(false);
 		boton.addActionListener(this);
 		this.getRootPane().setDefaultButton(boton);
-		desconectar.addActionListener(this);
+		salir.addActionListener(this);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		this.socket = socket;
 		this.nombre = nombre;
@@ -164,7 +164,7 @@ public class Cliente extends JFrame implements ActionListener
 		 y también se envía un * para indicar al servidor que el cliente se ha cerrado
 		 
 		*/
-		else if(e.getSource()==desconectar)
+		else if(e.getSource()==salir)
 		{
 			String texto = nombre + " ha abandonado el juego " +" >"+" ";
 			try

@@ -24,35 +24,32 @@ public class Servidor extends JFrame implements ActionListener
 	static int CONEXIONES = 0;
 	static int ACTUALES = 0;
 	static int MAXIMO = 15;
-	static JTextField mensaje = new JTextField("");
-	static JTextField mensaje2 = new JTextField("");
-	static JLabel numeroGenerado = new JLabel("Número a adivinar");
-	static JTextField mensaje3 = new JTextField("");
+	static JTextField msg = new JTextField("");
+	static JTextField msg2 = new JTextField("");
+	static JLabel numeroRNDM = new JLabel("Número a adivinar");
+	static JTextField msg3 = new JTextField("");
 	private JScrollPane scrollpane1;
 	static JTextArea textarea;
 	JButton salir = new JButton("Salir");	
-	static Socket[] tabla = new Socket[MAXIMO];
-		
+	static Socket[] tabla = new Socket[MAXIMO];	
 	static int numero;
-	static int numeroApuesta;
-	
 	
 	public Servidor()
 	{
 		// Construimos el entorno gráfico
 		super(" Servidor ");
 		setLayout(null);
-		mensaje.setBounds(10, 10, 400, 30);
-		add(mensaje);
-		mensaje.setEditable(false);
-		mensaje2.setBounds(10, 350, 400, 30);
-		add(mensaje2);
-		mensaje2.setEditable(false);
-		numeroGenerado.setBounds(415, 58, 120, 30);
-		add(numeroGenerado);
-		mensaje3.setBounds(450, 90, 30, 30);
-		add(mensaje3);
-		mensaje3.setEditable(false);
+		msg.setBounds(10, 10, 400, 30);
+		add(msg);
+		msg.setEditable(false);
+		msg2.setBounds(10, 350, 400, 30);
+		add(msg2);
+		msg2.setEditable(false);
+		numeroRNDM.setBounds(415, 58, 120, 30);
+		add(numeroRNDM);
+		msg3.setBounds(450, 90, 30, 30);
+		add(msg3);
+		msg3.setEditable(false);
 		textarea = new JTextArea();
 		scrollpane1 = new JScrollPane(textarea);
 		scrollpane1.setBounds(10, 50, 400, 300);
@@ -73,12 +70,12 @@ public class Servidor extends JFrame implements ActionListener
 		// y las variables y se prepara la pantalla
 		servidor = new ServerSocket(PUERTO);
 		System.out.println("Servidor iniciado");
-		Servidor pantalla = new Servidor();
-		pantalla.setBounds(0, 0, 540, 450);
-		pantalla.setVisible(true);
-		mensaje.setText("Conexiones actuales: " + 0);
+		Servidor ventana = new Servidor();
+		ventana.setBounds(0, 0, 540, 450);
+		ventana.setVisible(true);
+		msg.setText("Conexiones actuales: " + 0);
 		random();
-		mensaje3.setText(numero+"");
+		msg3.setText(numero+"");
 		// Se usa un bucle para controlar el número de conexiones.
 		// Dentro del bucle el servidor espera la conexión
 		// del cliente y cuando se conecta se crea un socket
@@ -96,7 +93,7 @@ public class Servidor extends JFrame implements ActionListener
 			}
 			// El socket creado se añade a la tabla,
 			// se incrementa el número de conexiones
-			// y se lanza el hilo para gestionar los mensajes
+			// y se lanza el hilo para gestionar los msgs
 			// del cliente que se acaba de conectar
 			tabla[CONEXIONES] = socket;
 			CONEXIONES++;
@@ -116,8 +113,8 @@ public class Servidor extends JFrame implements ActionListener
 		{
 			try
 			{
-				mensaje2.setForeground(Color.red);
-				mensaje2.setText("Máximo Nº de conexiones establecidas: " +
+				msg2.setForeground(Color.red);
+				msg2.setText("Máximo Nº de conexiones establecidas: " +
 						CONEXIONES);
 				servidor.close();
 			}
